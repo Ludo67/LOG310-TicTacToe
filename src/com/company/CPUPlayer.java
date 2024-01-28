@@ -31,7 +31,6 @@ class CPUPlayer
     public ArrayList<Move> getNextMoveMinMax(Board board)
     {
         numExploredNodes = 0;
-
     }
 
     // Retourne la liste des coups possibles.  Cette liste contient
@@ -39,7 +38,6 @@ class CPUPlayer
     // ont le même score.
     public ArrayList<Move> getNextMoveAB(Board board){
         numExploredNodes = 0;
-
     }
 
 }
