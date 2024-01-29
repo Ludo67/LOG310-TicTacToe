@@ -61,6 +61,28 @@ class CPUPlayer
     // ont le même score.
     public ArrayList<Move> getNextMoveAB(Board board){
         numExploredNodes = 0;
+
+        ArrayList<Move> bestMoves = new ArrayList<>();
+
+        // Parcourir les cases vides du plateau
+        for(int r=0; r<3; r++){
+            for(int c=0; c<3; c++){
+                if(board.isEmpty(r, c)){
+                    // Create move
+                    Move move = new Move(r, c);
+
+                    // TODO: Utiliser l'algorhitme minMax pour trier la liste des coups
+                    // TODO: Retourner les meilleurs coups
+
+                }
+
+            }
+        }
+
+
+
+
+        return bestMoves;
     }
 
 }
