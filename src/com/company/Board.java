@@ -9,6 +9,16 @@ import java.util.ArrayList;
 public class Board
 {
     private Mark[][] board;
+
+    // Vérifier si la case est vide
+    public boolean isEmpty(int row, int col) {
+        if(board[row][col] == Mark.EMPTY){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     private static final int SIZE = 3;
 
     // Ne pas changer la signature de cette méthode

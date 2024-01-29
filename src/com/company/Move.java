@@ -4,7 +4,6 @@ class Move
 {
     private int row;
     private int col;
-
     public Move(){
         row = -1;
         col = -1;
