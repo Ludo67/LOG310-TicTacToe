@@ -73,9 +73,9 @@ public class Board
         }
 
         if (tieCounter == 9) {
-            return 1;
+            return 0;
         }
-        return 0; // No winner yet
+        return 1; // No winner yet
     }
 
     public Mark getMark(int row, int col) {

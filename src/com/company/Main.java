@@ -6,11 +6,18 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
+        // Declarer le scanner
         Scanner scanner = new Scanner(System.in);
 
+        // Etats du jeu
         boolean gameOver = false;
         boolean validInput = false;
 
+        // Settings
+        Mark cpuMark = Mark.X;
+        Mark plrMark = Mark.O;
+
+        // Creation du jeu
         Mark[][] marks = new Mark[3][3];
         for (int r = 0; r < marks.length; r++) {
 
@@ -20,53 +27,72 @@ public class Main {
         }
 
         Board board = new Board(marks);
-        CPUPlayer player = new CPUPlayer(Mark.X);
-        int CpuGameState;
-        int plrGameState;
+        CPUPlayer player = new CPUPlayer(cpuMark);
 
+        // Afficher le jeu
         printBoard(board, marks);
 
+        // Jouer le jeu tant que le jeu n'est pas finit
         while (!gameOver) {
 
             int inputRow = 0;
             int inputCol = 0;
+
+            // Attendre le "input" du joueur et valider
             while (!validInput) {
-                System.out.println("Enter row: ");
+                System.out.println("============");
+                System.out.print("Enter row: ");
 
                 inputRow = scanner.nextInt();
 
-                System.out.println("Enter column: ");
+                System.out.print("Enter column: ");
 
                 inputCol = scanner.nextInt();
-
+                System.out.println("============");
                 if (board.isEmpty(inputRow, inputCol)) {
                     validInput = true;
                 } else{
-                    System.out.println("ALREADY TAKEN!");
+                    System.out.println("LA CASE EST DEJA PRISE");
                 }
             }
             validInput = false;
 
+            // Jouer
             Move move = new Move(inputRow, inputCol);
-            board.play(move, Mark.O);
+            board.play(move, plrMark);
 
+            // Obtenir le meilleur coup avec minimax
             ArrayList<Move> bestMoveCpu = player.getNextMoveMinMax(board, true);
 
+            // Jouer le coup du CPU
             if (!bestMoveCpu.isEmpty()) {
                 System.out.println("============");
-                System.out.println("CPU Plays: ");
-                System.out.println("Col: " + bestMoveCpu.get(0).getCol() + " | Row: " + bestMoveCpu.get(0).getRow());
+                System.out.println("CPU joue: ");
+                System.out.println("Row: " + bestMoveCpu.get(0).getRow() + " | Col: " + bestMoveCpu.get(0).getCol());
                 System.out.println("============");
-                board.play(bestMoveCpu.get(0), Mark.X);
+                board.play(bestMoveCpu.get(0), cpuMark);
             }
 
+            // Afficher le jeu
             printBoard(board, marks);
 
-            if ((board.evaluate(Mark.X) != 0) || (board.evaluate(Mark.O) != 0)) {
+            // Verifier l'état du jeu; si c'est finit
+            int CpuGameState = board.evaluate(cpuMark);
+            int plrGameState = board.evaluate(plrMark);
+
+            if ((CpuGameState != 1) || (plrGameState != 1)) {
                 gameOver = true;
-                CpuGameState = board.evaluate(Mark.X);
-                plrGameState = board.evaluate(Mark.O);
-                System.out.println("CPU: " + CpuGameState + " plr " + plrGameState);
+                System.out.println("============");
+                if (CpuGameState == 100) {
+                    System.out.println("CPU a gagné!");
+                }
+                else if (plrGameState == 100) {
+                    System.out.println("Joueur a gagné!");
+                }
+                else {
+                    System.out.println("Égalité!");
+                }
+                System.out.println("============");
             }
 
         }
