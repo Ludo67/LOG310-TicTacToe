@@ -53,6 +53,7 @@ class CPUPlayer
                     board.play(move, cpuPlr);
                     int score = minimax(board, 0, false);
                     System.out.println(score + " " + bestScore);
+                    System.out.println(score > bestScore);
                     board.play(move, Mark.EMPTY);
 
                     if (score > bestScore) {
@@ -71,7 +72,7 @@ class CPUPlayer
         int gameState = board.evaluate(cpuPlr);
 
         if (gameState != 0) {
-            return gameState; // Return the evaluation score directly
+            return gameState - depth; // Return the evaluation score directly
         }
 
         if (isMaximizing) {
