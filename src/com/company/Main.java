@@ -41,18 +41,53 @@ public class Main {
             // Attendre le "input" du joueur et valider
             while (!validInput) {
                 System.out.println("============");
-                System.out.print("Enter row: ");
+                System.out.print("ENTRER LA RANGÉE: ");
 
+                while (!scanner.hasNextInt()) {
+                    System.out.println("VEUILLEZ ENTRER UN CHIFFRE POUR LA RANGÉE.");
+                    scanner.next();
+                    System.out.print("ENTRER LA RANGÉE: ");
+                }
                 inputRow = scanner.nextInt();
 
-                System.out.print("Enter column: ");
+                // Valider si l'entrée est correcte
+                while (inputRow < 0 || inputRow >= 3) {
+                    System.out.println("ENTRÉE INVALIDE. VEUILLEZ ENTRER UN CHIFFRE ENTRE 0 ET 2");
+                    System.out.print("ENTRER LA RANGÉE: ");
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("VEUILLEZ ENTRER UN CHIFFRE POUR LA RANGÉE.");
+                        scanner.next();
+                        System.out.print("ENTRER LA RANGÉE: ");
+                    }
+                    inputRow = scanner.nextInt();
+                }
 
+                System.out.print("ENTRER LA COLONNE: ");
+                while (!scanner.hasNextInt()) {
+                    System.out.println("VEUILLEZ ENTRER UN CHIFFRE POUR LA COLONNE.");
+                    scanner.next();
+                    System.out.print("ENTRER LA COLONNE: ");
+                }
                 inputCol = scanner.nextInt();
+
+                // Valider si l'entrée est correcte
+                while (inputCol < 0 || inputCol >= 3) {
+                    System.out.println("ENTRÉE INVALIDE. VEUILLEZ ENTRER UN CHIFFRE ENTRE 0 ET 2");
+                    System.out.print("ENTRER LA COLONNE: ");
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("VEUILLEZ ENTRER UN CHIFFRE POUR LA COLONNE.");
+                        scanner.next();
+                        System.out.print("ENTRER LA COLONNE: ");
+                    }
+                    inputCol = scanner.nextInt();
+                }
+
                 System.out.println("============");
+
                 if (board.isEmpty(inputRow, inputCol)) {
                     validInput = true;
-                } else{
-                    System.out.println("LA CASE EST DEJA PRISE");
+                } else {
+                    System.out.println("LA CASE EST DÉJA PRISE !");
                 }
             }
             validInput = false;
@@ -62,13 +97,16 @@ public class Main {
             board.play(move, plrMark);
 
             // Obtenir le meilleur coup avec minimax
-            ArrayList<Move> bestMoveCpu = player.getNextMoveMinMax(board, true);
+            //ArrayList<Move> bestMoveCpu = player.getNextMoveMinMax(board, true);
+
+            // Obtenir le meilleur coup avec Alphabeta
+            ArrayList<Move> bestMoveCpu = player.getNextMoveAB(board, true);
 
             // Jouer le coup du CPU
             if (!bestMoveCpu.isEmpty()) {
                 System.out.println("============");
-                System.out.println("CPU joue: ");
-                System.out.println("Row: " + bestMoveCpu.get(0).getRow() + " | Col: " + bestMoveCpu.get(0).getCol());
+                System.out.println("IA joue: ");
+                System.out.println("Rangée: " + bestMoveCpu.get(0).getRow() + " | Colonne: " + bestMoveCpu.get(0).getCol());
                 System.out.println("============");
                 board.play(bestMoveCpu.get(0), cpuMark);
             }
@@ -84,13 +122,13 @@ public class Main {
                 gameOver = true;
                 System.out.println("============");
                 if (CpuGameState == 100) {
-                    System.out.println("CPU a gagne!");
+                    System.out.println("IA a gagné!");
                 }
                 else if (plrGameState == 100) {
-                    System.out.println("Joueur a gagne!");
+                    System.out.println("Joueur a gagné!");
                 }
                 else {
-                    System.out.println("Egalite!");
+                    System.out.println("Partie nulle!");
                 }
                 System.out.println("============");
             }
