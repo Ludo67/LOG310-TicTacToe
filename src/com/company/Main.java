@@ -29,12 +29,16 @@ public class Main {
         Board board = new Board(marks);
         CPUPlayer player = new CPUPlayer(cpuMark);
 
+        // Afficher le jeu
         printBoard(board, marks);
 
+        // Jouer le jeu tant que le jeu n'est pas finit
         while (!gameOver) {
 
             int inputRow = 0;
             int inputCol = 0;
+
+            // Attendre le "input" du joueur et valider
             while (!validInput) {
                 System.out.println("============");
                 System.out.print("Enter row: ");
@@ -53,11 +57,14 @@ public class Main {
             }
             validInput = false;
 
+            // Jouer
             Move move = new Move(inputRow, inputCol);
             board.play(move, plrMark);
 
+            // Obtenir le meilleur coup avec minimax
             ArrayList<Move> bestMoveCpu = player.getNextMoveMinMax(board, true);
 
+            // Jouer le coup du CPU
             if (!bestMoveCpu.isEmpty()) {
                 System.out.println("============");
                 System.out.println("CPU joue: ");
@@ -66,8 +73,10 @@ public class Main {
                 board.play(bestMoveCpu.get(0), cpuMark);
             }
 
+            // Afficher le jeu
             printBoard(board, marks);
 
+            // Verifier l'état du jeu; si c'est finit
             int CpuGameState = board.evaluate(cpuMark);
             int plrGameState = board.evaluate(plrMark);
 
