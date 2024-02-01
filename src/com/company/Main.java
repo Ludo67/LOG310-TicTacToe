@@ -5,7 +5,11 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
+
+        Scanner scanner = new Scanner(System.in);
+
         boolean gameOver = false;
+        boolean validInput = false;
 
         Mark[][] marks = new Mark[3][3];
         for (int r = 0; r < marks.length; r++) {
@@ -20,52 +24,76 @@ public class Main {
         int CpuGameState;
         int plrGameState;
 
+        printBoard(board, marks);
+
         while (!gameOver) {
-            for (int r = 0; r < marks.length; r++) {
 
-                for (int c = 0; c < marks[r].length; c++) {
-                    if (marks[r][c] == Mark.X) {
-                        System.out.print("| X |");
-                    }
-                    else if (marks[r][c] == Mark.O) {
-                        System.out.print("| O |");
-                    }
-                    else {
-                        System.out.print("|   |");
-                    }
+            int inputRow = 0;
+            int inputCol = 0;
+            while (!validInput) {
+                System.out.println("Enter row: ");
+
+                inputRow = scanner.nextInt();
+
+                System.out.println("Enter column: ");
+
+                inputCol = scanner.nextInt();
+
+                if (board.isEmpty(inputRow, inputCol)) {
+                    validInput = true;
+                } else{
+                    System.out.println("ALREADY TAKEN!");
                 }
-                System.out.println("");
             }
-            Scanner scanner = new Scanner(System.in);
+            validInput = false;
 
-            System.out.println("Enter row: ");
-
-            int row = scanner.nextInt();
-
-            System.out.println("Enter column: ");
-
-            int col = scanner.nextInt();
-
-            Move move = new Move(row, col);
+            Move move = new Move(inputRow, inputCol);
             board.play(move, Mark.O);
 
             ArrayList<Move> bestMoveCpu = player.getNextMoveMinMax(board, true);
-            System.out.println("Col: " + bestMoveCpu.get(0).getCol());
-            System.out.println("Row: " + bestMoveCpu.get(0).getRow());
+
             if (!bestMoveCpu.isEmpty()) {
-                Move newMove = new Move(bestMoveCpu.get(0).getRow(), bestMoveCpu.get(0).getCol());
-                board.play(newMove, Mark.X);
+                System.out.println("============");
+                System.out.println("CPU Plays: ");
+                System.out.println("Col: " + bestMoveCpu.get(0).getCol() + " | Row: " + bestMoveCpu.get(0).getRow());
+                System.out.println("============");
+                board.play(bestMoveCpu.get(0), Mark.X);
             }
 
-//            if ((board.evaluate(Mark.X) != -100) || (board.evaluate(Mark.O) != -100)) {
-//                gameOver = true;
-//                CpuGameState = board.evaluate(Mark.X);
-//                plrGameState = board.evaluate(Mark.O);
-//                System.out.println("CPU: " + CpuGameState + " plr " + plrGameState);
-//            }
+            printBoard(board, marks);
+
+            if ((board.evaluate(Mark.X) != 0) || (board.evaluate(Mark.O) != 0)) {
+                gameOver = true;
+                CpuGameState = board.evaluate(Mark.X);
+                plrGameState = board.evaluate(Mark.O);
+                System.out.println("CPU: " + CpuGameState + " plr " + plrGameState);
+            }
 
         }
 
 
     }
+
+    public static void printBoard(Board board, Mark[][] marks) {
+        int rowNum = 0;
+        System.out.println("    0    1    2  ");
+        for (int r = 0; r < marks.length; r++) {
+
+            System.out.print(rowNum + " ");
+            for (int c = 0; c < marks[r].length; c++) {
+                if (board.getMark(r, c) == Mark.X) {
+                    System.out.print("| X |");
+                }
+                else if (board.getMark(r, c) == Mark.O) {
+                    System.out.print("| O |");
+                }
+                else {
+                    System.out.print("|   |");
+                }
+            }
+            System.out.println("");
+            rowNum++;
+        }
+    }
+
 }

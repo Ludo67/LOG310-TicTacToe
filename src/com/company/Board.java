@@ -63,7 +63,23 @@ public class Board
             return -100;
 //        return 0;
 
+        int tieCounter = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] != Mark.EMPTY) {
+                    tieCounter++;
+                }
+            }
+        }
+
+        if (tieCounter == 9) {
+            return 1;
+        }
         return 0; // No winner yet
+    }
+
+    public Mark getMark(int row, int col) {
+        return board[row][col];
     }
 
 }
