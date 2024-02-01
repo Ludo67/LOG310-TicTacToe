@@ -45,6 +45,7 @@ class CPUPlayer
         // Parcourir les cases vides du plateau
         for(int r = 0; r < 3; r++) {
             for(int c = 0; c < 3; c++) {
+                // Verifier si cest vide
                 if(board.isEmpty(r, c)) {
                     numExploredNodes += 1;
 
@@ -52,8 +53,6 @@ class CPUPlayer
 
                     board.play(move, cpuPlr);
                     int score = minimax(board, 0, false);
-                    System.out.println(score + " " + bestScore);
-                    System.out.println(score > bestScore);
                     board.play(move, Mark.EMPTY);
 
                     if (score > bestScore) {
@@ -69,17 +68,21 @@ class CPUPlayer
     }
 
     public int minimax(Board board, int depth, boolean isMaximizing) {
+        // Regarder si le jeu est finit
         int gameState = board.evaluate(cpuPlr);
 
-        if (gameState != 0) {
-            return gameState - depth; // Return the evaluation score directly
+        // Calculer le score selon le depth du code recursif
+        if (gameState != 1) {
+            return gameState - depth;
         }
 
+        // Minimax
         if (isMaximizing) {
+            // Code pour maximiser
             int bestScore = Integer.MIN_VALUE;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    // Is the spot available?
+                    // Verifier si on peut jouer
                     if (board.isEmpty(i, j)) {
                         Move move = new Move(i, j);
                         board.play(move, cpuPlr);
@@ -91,10 +94,11 @@ class CPUPlayer
             }
             return bestScore;
         } else {
+            // Code pour minimiser
             int bestScore = Integer.MAX_VALUE;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    // Is the spot available?
+                    // Verifier si on peut jouer
                     if (board.isEmpty(i, j)) {
                         Move move = new Move(i, j);
                         board.play(move, plr);
