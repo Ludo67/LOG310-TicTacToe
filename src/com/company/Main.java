@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        // write your code here
 
         // Declarer le scanner
         Scanner scanner = new Scanner(System.in);
@@ -84,13 +84,13 @@ public class Main {
                 gameOver = true;
                 System.out.println("============");
                 if (CpuGameState == 100) {
-                    System.out.println("CPU a gagné!");
+                    System.out.println("CPU a gagne!");
                 }
                 else if (plrGameState == 100) {
-                    System.out.println("Joueur a gagné!");
+                    System.out.println("Joueur a gagne!");
                 }
                 else {
-                    System.out.println("Égalité!");
+                    System.out.println("Egalite!");
                 }
                 System.out.println("============");
             }
