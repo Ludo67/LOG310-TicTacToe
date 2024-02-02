@@ -12,6 +12,8 @@ public class Main {
         // Etats du jeu
         boolean gameOver = false;
         boolean validInput = false;
+        boolean minimaxValidated = false;
+        boolean isMinimax = true;
 
         // Settings
         Mark cpuMark = Mark.X;
@@ -28,6 +30,41 @@ public class Main {
 
         Board board = new Board(marks);
         CPUPlayer player = new CPUPlayer(cpuMark);
+
+        // Choisir game mode:
+        System.out.println("Selectionner mode de jeu:");
+        System.out.println("Entrez 1 pour minimax, 2 pour alphabeta");
+
+        while (!minimaxValidated)
+        {
+            int entry;
+            // Valider si l'entrée est correcte
+            while (!scanner.hasNextInt()) {
+                System.out.println("VEUILLEZ ENTRER UN CHIFFRE.");
+                scanner.next();
+                System.out.println("Entrez 1 pour minimax, 2 pour alphabeta");
+            }
+
+            entry = scanner.nextInt();
+
+            while (entry != 1 && entry != 2) {
+                System.out.println("ENTRÉE INVALIDE. Entrez 1 pour minimax, 2 pour alphabeta");
+                System.out.println(entry != 1 || entry != 2);
+                while (!scanner.hasNextInt()) {
+                    System.out.println("Entrez 1 pour minimax, 2 pour alphabeta.");
+                    scanner.next();
+                }
+                entry = scanner.nextInt();
+            }
+
+            if (entry == 1) {
+                isMinimax = true;
+            }
+            else {
+                isMinimax = false;
+            }
+            minimaxValidated = true;
+        }
 
         // Afficher le jeu
         printBoard(board, marks);
@@ -96,11 +133,15 @@ public class Main {
             Move move = new Move(inputRow, inputCol);
             board.play(move, plrMark);
 
-            // Obtenir le meilleur coup avec minimax
-            //ArrayList<Move> bestMoveCpu = player.getNextMoveMinMax(board, true);
-
-            // Obtenir le meilleur coup avec Alphabeta
-            ArrayList<Move> bestMoveCpu = player.getNextMoveAB(board, true);
+            ArrayList<Move> bestMoveCpu;
+            if (isMinimax) {
+                // Obtenir le meilleur coup avec minimax
+                bestMoveCpu = player.getNextMoveMinMax(board);
+            }
+            else {
+                // Obtenir le meilleur coup avec Alphabeta
+                bestMoveCpu = player.getNextMoveAB(board);
+            }
 
             // Jouer le coup du CPU
             if (!bestMoveCpu.isEmpty()) {

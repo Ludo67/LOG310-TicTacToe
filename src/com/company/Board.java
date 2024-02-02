@@ -26,10 +26,6 @@ public class Board
         this.board = board;
     }
 
-    public Board(Board board) {
-        this.board = board.board;
-    }
-
     // Place la pièce 'mark' sur le plateau, à la
     // position spécifiée dans Move
     //
