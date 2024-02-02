@@ -51,10 +51,15 @@ class CPUPlayer
 
                     Move move = new Move(r, c);
 
+                    // Jouer le move pour l'algo
                     board.play(move, cpuPlr);
+                    // Debuter l'appel recursif
                     int score = minimax(board, false);
+
+                    // Remettre le Board a l'etat initial
                     board.play(move, Mark.EMPTY);
 
+                    // Obtenir le meilleur move
                     if (score > bestScore) {
                         bestScore = score;
                         bestMoves.clear();
@@ -185,10 +190,15 @@ class CPUPlayer
 
                     Move move = new Move(r, c);
 
+                    // Jouer le move pour l'algo
                     board.play(move, cpuPlr);
+                    // Debuter l'appel recursif
                     int score = alphabeta(board, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+
+                    // Remettre le Board a l'etat initial
                     board.play(move, Mark.EMPTY);
 
+                    // Obtenir le meilleur move
                     if (score > bestScore) {
                         bestScore = score;
                         bestMoves.clear();

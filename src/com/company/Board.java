@@ -40,6 +40,7 @@ public class Board
     //           0   pour un match nul
     // Ne pas changer la signature de cette méthode
     public int evaluate(Mark mark){
+        // haut-bas et gauche-droite
         for (int i = 0; i < SIZE; i++) {
             if (board[i][0] == mark && board[i][1] == mark && board[i][2] == mark) return 100;
             else if (board[i][0] != Mark.EMPTY && board[i][0] != mark && board[i][1] == board[i][0] && board[i][2] == board[i][0]) {
@@ -50,15 +51,15 @@ public class Board
             else if (board[0][i] != Mark.EMPTY && board[0][i] != mark && board[1][i] == board[0][i] && board[2][i] == board[0][i])
                 return -100;
         }
-//        // diagonales
+        //diagonales
         if (board[0][0] == mark && board[1][1] == mark && board[2][2] == mark) return 100;
         else if (board[0][0] != Mark.EMPTY && board[0][0] != mark && board[1][1] == board[0][0] && board[2][2] == board[0][0])
             return -100;
         if (board[0][2] == mark && board[1][1] == mark && board[2][0] == mark) return 100;
         else if (board[0][2] != Mark.EMPTY && board[0][2] != mark && board[1][1] == board[0][2] && board[2][0] == board[0][2])
             return -100;
-//        return 0;
 
+        // verifier si cest nul
         int tieCounter = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -71,9 +72,10 @@ public class Board
         if (tieCounter == 9) {
             return 0;
         }
-        return 1; // No winner yet
+        return 1; // Pas de gagnant
     }
 
+    // Obtenir le Mark pour le Main
     public Mark getMark(int row, int col) {
         return board[row][col];
     }
