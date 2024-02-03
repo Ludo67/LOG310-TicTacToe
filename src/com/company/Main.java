@@ -49,7 +49,6 @@ public class Main {
 
             while (entry != 1 && entry != 2) {
                 System.out.println("ENTRÉE INVALIDE. Entrez 1 pour minimax, 2 pour alphabeta");
-                System.out.println(entry != 1 || entry != 2);
                 while (!scanner.hasNextInt()) {
                     System.out.println("Entrez 1 pour minimax, 2 pour alphabeta.");
                     scanner.next();
