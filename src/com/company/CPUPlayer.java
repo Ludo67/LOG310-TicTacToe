@@ -47,7 +47,6 @@ class CPUPlayer
             for(int c = 0; c < 3; c++) {
                 // Verifier si cest vide
                 if(board.isEmpty(r, c)) {
-                    numExploredNodes++;
 
                     Move move = new Move(r, c);
 
@@ -186,7 +185,6 @@ class CPUPlayer
         for(int r=0; r<3; r++){
             for(int c=0; c<3; c++){
                 if(board.isEmpty(r, c)) {
-                    numExploredNodes++;
 
                     Move move = new Move(r, c);
 
