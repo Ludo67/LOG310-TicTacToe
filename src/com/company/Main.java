@@ -146,6 +146,7 @@ public class Main {
             // Jouer le coup du CPU
             if (!bestMoveCpu.isEmpty()) {
                 System.out.println("============");
+                System.out.println("Explored nodes: " + player.getNumOfExploredNodes());
                 System.out.println("IA joue: ");
                 System.out.println("Rangée: " + bestMoveCpu.get(0).getRow() + " | Colonne: " + bestMoveCpu.get(0).getCol());
                 System.out.println("============");
@@ -173,7 +174,6 @@ public class Main {
                 }
                 System.out.println("============");
             }
-
         }
 
 

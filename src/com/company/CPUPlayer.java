@@ -68,7 +68,6 @@ class CPUPlayer
                 }
             }
         }
-        System.out.println("Explroed nodes: " + numExploredNodes);
         return bestMoves;
     }
 
